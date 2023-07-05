@@ -1,18 +1,35 @@
 body {
     margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-h1 {
-    margin: 0;
-    text-align: center;
+#criar {
+    color: white;
+    width: 80px;
+    height: 40px;
+    background-color: #00AFEF;
+    border: 0;
+    border-radius: 10px;
+    font: 18px Arial;
+}
+
+#txtInput {
+    width: 520px;
+    height: 35px;
+    color: #E6E7E8;
+    background-color: #373435;
+    border-radius: 10px;
+    font: 20px Arial;
 }
 
 header {
     background: #E6E7E8;
-    height: 20vh;
+    flex: 0 0 20vh;
+    text-align: center;
 }
 
 main {
     background: #4B4B4D;
-    height: 80vh;
+    flex: 0 0 80vh;
 }
