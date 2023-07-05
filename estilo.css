@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+}
+
+h1 {
+    margin: 0;
+    text-align: center;
+}
+
+header {
+    background: #E6E7E8;
+    height: 20vh;
+}
+
+main {
+    background: #4B4B4D;
+    height: 80vh;
+}
