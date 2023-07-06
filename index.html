@@ -7,17 +7,31 @@
     <title>To-do-list</title>
 </head>
 <body>
-        <header>
+        <div id="top">
             <h1>
                 <img src="/contents/justdoitlistlogo.png" alt="justdoitlistlogo">
             </h1>
-            <p>
-                <input type="text" name="txtInput" id="txtInput">
-                <button name="criar" id="criar">Criar</button>
-            </p>         
-        </header>
-        <main>
+        </div>
+        <div id="mid">
+            <input type="text" name="txtInput" id="txtInput">
+            <button name="criar" id="criar">Criar
+                <img src="/contents/icone_botao.png" alt="icone_botao">
+            </button>
+        </div>
+        <div id="botton">
 
-        </main>
+            <div id="status">
+                <div id="tarefasCriadas">Tarefas criadas</div>
+                <div id="tarefasConcluidas">Concluídas</div>
+            </div>
+
+            <ul id="taskList">
+                <li id="task1">
+                    <button id="taskComplete">Concluido</button>
+                    <button id="taskText">Tarefa1</button>
+                    <button id="taskDelete">Excluir</button>
+                </li>
+            </ul>
+        </div>
 </body>
 </html>
