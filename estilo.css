@@ -3,12 +3,13 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    position: relative;
+    align-items: center;
 }
 
 #top {
     background: #E6E7E8;
     flex: 0 0 20vh;
+    width: 100vh;
     text-align: center;
     position: relative;
     z-index: 1;
@@ -49,22 +50,7 @@ body {
     margin-top: 5vh;
 }
 
-#taskList {
-    display: flex;
-    width: 100vh;
-    list-style: none;
-    padding: 0;
-    padding-top: 30px;
-    background-color: #373435;
-    border-radius: 10px;
-}
-
-#task1 {
-    display: flex;
-    align-items: center;
-}
-
-#criar {
+#create {
     color: white;
     width: 80px;
     height: 40px;
@@ -74,11 +60,35 @@ body {
     font: 18px Arial;
 }
 
-#txtInput {
+#inputText {
     width: 520px;
     height: 35px;
     color: #E6E7E8;
     background-color: #373435;
     border-radius: 10px;
     font: 20px Arial;
+    margin: 0 auto;
+}
+
+#taskList {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    list-style: none;
+    padding: 0;
+    font: 20px Arial;
+    border-radius: 10px;
+}
+
+#deleteButton {
+    background-color: #373435;
+}
+
+.taskItem {
+    width: 520px;
+    height: fit-content; 
+    background-color: #373435;
+    color: #E6E7E8;
+    margin: 5px;
 }
