@@ -1,6 +1,6 @@
-var inputText = document.getElementById('inputText');
-var create = document.getElementById('create');
-var taskList = document.getElementById('taskList');
+var inputText = document.querySelector('.input-text');
+var create = document.querySelector('.create');
+var taskList = document.querySelector('.task-list');
 
 create.addEventListener('click', task);
 
@@ -16,10 +16,10 @@ function task(){
         const deleteButton = document.createElement('button');
         const trashIcon = document.createElement('img');
         trashIcon.src = '/contents/trash_icon.png';
-        trashIcon.alt = 'Excluir';
+        trashIcon.alt = 'Delete';
         deleteButton.appendChild(trashIcon);
-        deleteButton.id = 'deleteButton';
-        taskItem.className = 'taskItem';
+        deleteButton.className = 'delete-button';
+        taskItem.className = 'task-item';
 
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskTextElement);

@@ -6,22 +6,22 @@ body {
     align-items: center;
 }
 
-#top {
+.top {
     background: #E6E7E8;
     flex: 0 0 20vh;
-    width: 100vh;
+    width: 100%;
     text-align: center;
     position: relative;
     z-index: 1;
 }
 
-#mid {
+.mid {
     position: absolute;
     z-index: 2;
     margin-top: 165px;
 }
 
-#botton {
+.botton {
     background: #4B4B4D;
     flex: 1;
     position: relative;
@@ -29,28 +29,29 @@ body {
     align-items: center;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
-#status {
+.status {
     display: flex;
     width: 100vh;
     height: fit-content;
     justify-content: space-around;
 }
 
-#tarefasCriadas {
+.created-tasks {
     font: 18px Arial;
     color: #00AFEF;
     margin-top: 5vh;
 }
 
-#tarefasConcluidas {
+.completed-tasks {
     font: 18px Arial;
     color: #00AFEF;
     margin-top: 5vh;
 }
 
-#create {
+.create {
     color: white;
     width: 80px;
     height: 40px;
@@ -60,7 +61,7 @@ body {
     font: 18px Arial;
 }
 
-#inputText {
+.input-text {
     width: 520px;
     height: 35px;
     color: #E6E7E8;
@@ -70,7 +71,7 @@ body {
     margin: 0 auto;
 }
 
-#taskList {
+.task-list {
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -81,11 +82,11 @@ body {
     border-radius: 10px;
 }
 
-#deleteButton {
+.delete-button {
     background-color: #373435;
 }
 
-.taskItem {
+.task-item {
     width: 520px;
     height: fit-content; 
     background-color: #373435;
