@@ -9,8 +9,8 @@ Project for creating a to-do list
 
 ---
 
-## Layout Goal
+## Current layout
 
-<img alt="Layout Goal" src="https://github.com/SergioTEC/to-do-list/assets/48964231/78afb5ff-69bf-4b60-983b-f9babaeac020" width="80%">
+<img alt="Current layout" src="https://github.com/SergioTEC/to-do-list/assets/48964231/ce057689-9073-4044-9706-7063c818b21c" width="100%">
 
 ---
