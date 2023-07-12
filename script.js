@@ -20,6 +20,7 @@ function task(){
         deleteButton.appendChild(trashIcon);
         deleteButton.className = 'delete-button';
         taskItem.className = 'task-item';
+        checkbox.className = 'checkbox';
 
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskTextElement);

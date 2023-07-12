@@ -37,7 +37,6 @@ body {
     width: 100vh;
     height: fit-content;
     justify-content: space-around;
-    border: 5px solid red;
 }
 
 .created-tasks {
@@ -82,7 +81,6 @@ body {
     font: 20px Arial;
     border-radius: 10px;
     align-items: center;
-    border: 5px solid red;
 }
 
 .delete-button {
@@ -90,9 +88,27 @@ body {
 }
 
 .task-item {
+    display: flex;
     width: 610px;
     height: fit-content; 
     background-color: #373435;
     color: #E6E7E8;
     margin: 5px;
+    word-break: break-all;
+    align-items: flex-start;
+}
+
+.delete-button {
+    margin-left: 10px;
+    width: 50px;
+}
+
+span {
+    width: 100vh;
+    margin: 0;
+}
+
+.checkbox {
+    margin-right: 10px;
+    width: 50px;
 }
