@@ -31,16 +31,21 @@ function task(){
         function deleteTask(){
             taskList.removeChild(taskItem);
         }
-
-        /*
-        Criar evento para o checkbox
-        Quando for marcado mostrar que uma tarefa foi completa e
-        tachar o texto
-        checkbox.addEventListener()
-        */
         
+        //Evento Checkbox para tachar o texto
+        checkbox.addEventListener('change', strikethroughText)
 
+        //Função Checkbox para tachar o texto
+        function strikethroughText(){
+            if(this.checked) {
+                taskItem.style.textDecoration = 'line-through';
+                taskItem.style.color = '#40B87B';
+            } else {
+                taskItem.style.textDecoration = 'none';
+                taskItem.style.color = '#E6E7E8';
+            }
+        }
     } else {
         window.alert('Verifique se foi digitado algo em "Adicione uma nova tarefa"')
-    }
+    }   
 }
