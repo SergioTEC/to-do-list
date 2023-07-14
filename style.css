@@ -32,11 +32,12 @@ body {
     width: 100%;
 }
 
-.status {
+.counter {
     display: flex;
     width: 100vh;
     height: fit-content;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: center
 }
 
 .created-tasks {
@@ -45,10 +46,37 @@ body {
     margin-top: 5vh;
 }
 
-.completed-tasks {
+.task-counter {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 4px;
+    margin-top: 5vh;
+    margin-left: 1vh;
+    margin-right: 40%;
+    background-color: #E6E7E8;
+}
+
+.task-count-txt {
+    font: 18px Arial;
+}
+
+.completed-task {
     font: 18px Arial;
     color: #00AFEF;
     margin-top: 5vh;
+}
+
+.completed-task-counter {
+    width:fit-content;
+    height: fit-content;
+    border-radius: 4px;
+    background-color: #E6E7E8;
+    margin-top: 5vh;
+    margin-left: 1vh;
+}
+
+.completed-count-txt {
+    font: 18px Arial;
 }
 
 .create {
@@ -89,7 +117,7 @@ body {
 
 .task-item {
     display: flex;
-    width: 610px;
+    width: 710px;
     height: fit-content; 
     background-color: #373435;
     color: #E6E7E8;

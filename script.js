@@ -45,7 +45,10 @@ function task(){
                 taskItem.style.color = '#E6E7E8';
             }
         }
+
+        //Limpa o Input da tarefa
+        inputText.value = ''
     } else {
         window.alert('Verifique se foi digitado algo em "Adicione uma nova tarefa"')
-    }   
+    }  
 }
