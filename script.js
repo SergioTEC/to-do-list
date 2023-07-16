@@ -46,7 +46,6 @@ function updateCounter(){
         let number2 = parseInt(numbers[1]);
 
         let taskCountNumber = parseInt(taskCountTxt.textContent);
-        //let completedTaskCountNumber = parseInt(completedTaskCount);
 
         number1 = completedTaskCount;
         number2 = taskCountNumber;
@@ -86,6 +85,9 @@ function task(){
         taskItem.appendChild(deleteButton);
         taskList.appendChild(taskItem);
 
+        // Armazena a referência ao checkbox correspondente
+        const checkboxRef = checkbox;
+
         //Evento para deletar uma tarefa
         deleteButton.addEventListener('click', deleteTask);
 
@@ -93,7 +95,11 @@ function task(){
         function deleteTask(){
             taskList.removeChild(taskItem);
             subtractCounter(taskCountTxt);
-            subtractCompletedTaskCount();
+
+            // Verifica se a tarefa estava concluída antes de ser excluída
+            if(checkboxRef.checked) {
+                subtractCompletedTaskCount();
+            }
         }
         
         //Evento Checkbox para tachar o texto
