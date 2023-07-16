@@ -11,6 +11,6 @@ Project for creating a to-do list
 
 ## Current layout
 
-<img alt="Current layout" src="https://github.com/SergioTEC/to-do-list/assets/48964231/024affa5-e0d8-438c-bae7-cf668e7ecf74" width="100%">
+<img alt="Current layout" src="https://github.com/SergioTEC/to-do-list/assets/48964231/9600c314-78a1-4a15-b572-8f99eae581bb" width="100%">
 
 ---
