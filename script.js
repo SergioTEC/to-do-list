@@ -1,21 +1,59 @@
-var inputText = document.querySelector('.input-text');
-var create = document.querySelector('.create');
-var taskList = document.querySelector('.task-list');
-var taskCountTxt = document.querySelector('.task-count-txt');
+let inputText = document.querySelector('.input-text');
+let create = document.querySelector('.create');
+let taskList = document.querySelector('.task-list');
+let taskCountTxt = document.querySelector('.task-count-txt');
+let completedTaskCountTxt = document.querySelector('.completed-task-count-txt');
+let completedTaskCount = 0;
 
 //Evento de criação de uma tarefa
 create.addEventListener('click', task);
 
+//Função que faz a soma do contador de tarefas
 function addCounter(counterTaskTxt) {
     let taskCountNumber = parseInt(counterTaskTxt.textContent);
     taskCountNumber++
-    counterTaskTxt.textContent = taskCountNumber++;
+    counterTaskTxt.textContent = taskCountNumber;
+    updateCounter();
 }
 
+//Função que faz a subtração do contador de tarefas
 function subtractCounter(counterTaskTxt) {
     let taskCountNumber = parseInt(counterTaskTxt.textContent);
     taskCountNumber--
-    counterTaskTxt.textContent = taskCountNumber--;
+    counterTaskTxt.textContent = taskCountNumber;
+    updateCounter();
+}
+
+//Função que faz a soma das tarefas concluidas
+function addCompletedTaskCount(){
+    completedTaskCount++;
+    updateCounter();
+}
+
+//Função que faz a subtração das tarefas concluidas
+function subtractCompletedTaskCount(){
+    completedTaskCount--;
+    updateCounter();
+}
+
+//Função que atualiza o contador de tarefas concluidas
+function updateCounter(){
+    let text = completedTaskCountTxt.textContent;
+    let numbers = text.match(/\d+/g);
+
+    if (numbers.length === 2) {
+        let number1 = parseInt(numbers[0]);
+        let number2 = parseInt(numbers[1]);
+
+        let taskCountNumber = parseInt(taskCountTxt.textContent);
+        //let completedTaskCountNumber = parseInt(completedTaskCount);
+
+        number1 = completedTaskCount;
+        number2 = taskCountNumber;
+
+        let newText = number1 + ' de ' + number2;
+        completedTaskCountTxt.textContent = newText;
+    }
 }
 
 //Função para a criação de uma tarefa
@@ -55,6 +93,7 @@ function task(){
         function deleteTask(){
             taskList.removeChild(taskItem);
             subtractCounter(taskCountTxt);
+            subtractCompletedTaskCount();
         }
         
         //Evento Checkbox para tachar o texto
@@ -65,9 +104,11 @@ function task(){
             if(this.checked) {
                 taskItem.style.textDecoration = 'line-through';
                 taskItem.style.color = '#40B87B';
+                addCompletedTaskCount();
             } else {
                 taskItem.style.textDecoration = 'none';
                 taskItem.style.color = '#E6E7E8';
+                subtractCompletedTaskCount();
             }
         }
 
