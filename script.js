@@ -5,10 +5,10 @@ let taskCountTxt = document.querySelector('.task-count-txt');
 let completedTaskCountTxt = document.querySelector('.completed-task-count-txt');
 let completedTaskCount = 0;
 
-//Evento de criação de uma tarefa
+//Task creation event
 create.addEventListener('click', task);
 
-//Função que faz a soma do contador de tarefas
+//Function that makes the sum of the tasks counter
 function addCounter(counterTaskTxt) {
     let taskCountNumber = parseInt(counterTaskTxt.textContent);
     taskCountNumber++
@@ -16,7 +16,7 @@ function addCounter(counterTaskTxt) {
     updateCounter();
 }
 
-//Função que faz a subtração do contador de tarefas
+//Function that subtracts the task counter
 function subtractCounter(counterTaskTxt) {
     let taskCountNumber = parseInt(counterTaskTxt.textContent);
     taskCountNumber--
@@ -24,19 +24,19 @@ function subtractCounter(counterTaskTxt) {
     updateCounter();
 }
 
-//Função que faz a soma das tarefas concluidas
+//Function that makes the sum of completed tasks
 function addCompletedTaskCount(){
     completedTaskCount++;
     updateCounter();
 }
 
-//Função que faz a subtração das tarefas concluidas
+//Function that subtracts completed tasks
 function subtractCompletedTaskCount(){
     completedTaskCount--;
     updateCounter();
 }
 
-//Função que atualiza o contador de tarefas concluidas
+//Function that updates the counter of completed tasks
 function updateCounter(){
     let text = completedTaskCountTxt.textContent;
     let numbers = text.match(/\d+/g);
@@ -55,7 +55,7 @@ function updateCounter(){
     }
 }
 
-//Função para a criação de uma tarefa
+//Function for creating a task
 function task(){
     const taskText = inputText.value.trim();    
 
@@ -63,49 +63,56 @@ function task(){
 
         addCounter(taskCountTxt);
 
+        //Creating the task list
         const taskItem = document.createElement('li');
+        taskItem.className = 'task-item';
+        
+        //Checkbox creation
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
+        checkbox.className = 'checkbox';
 
+        //Creating task text
         const taskTextElement = document.createElement('span');
         taskTextElement.textContent = taskText;
 
+        //Creating the task delete button
         const deleteButton = document.createElement('button');
-        
+        deleteButton.className = 'delete-button';
+
+        //Creating the delete task button image
         const trashIcon = document.createElement('img');
         trashIcon.src = '/contents/trash_icon.png';
         trashIcon.alt = 'Delete';
-        deleteButton.appendChild(trashIcon);
-        deleteButton.className = 'delete-button';
-        taskItem.className = 'task-item';
-        checkbox.className = 'checkbox';
 
+        //Adds the created elements as children of the task element
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskTextElement);
         taskItem.appendChild(deleteButton);
+        deleteButton.appendChild(trashIcon);
         taskList.appendChild(taskItem);
 
-        // Armazena a referência ao checkbox correspondente
+        //Stores the reference to the corresponding checkbox
         const checkboxRef = checkbox;
 
-        //Evento para deletar uma tarefa
+        //Creating the event to delete a task
         deleteButton.addEventListener('click', deleteTask);
 
-        //Função para deletar uma tarefa 
+        //Function to delete a task
         function deleteTask(){
             taskList.removeChild(taskItem);
             subtractCounter(taskCountTxt);
 
-            // Verifica se a tarefa estava concluída antes de ser excluída
+            //Checks that the task is complete before being deleted
             if(checkboxRef.checked) {
                 subtractCompletedTaskCount();
             }
         }
         
-        //Evento Checkbox para tachar o texto
+        //Checkbox event to strikethrough text
         checkbox.addEventListener('change', strikethroughText)
 
-        //Função Checkbox para tachar o texto
+        //Checkbox function to strikethrough text
         function strikethroughText(){
             if(this.checked) {
                 taskItem.style.textDecoration = 'line-through';
@@ -118,7 +125,7 @@ function task(){
             }
         }
 
-        //Limpa o Input da tarefa
+        //Clear Task Creation Input
         inputText.value = ''
     } else {
         window.alert('Verifique se foi digitado algo em "Adicione uma nova tarefa"')
