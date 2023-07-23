@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+}
+
+.top {
+  background: #e6e7e8;
+  flex: 0 0 20vh;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.mid {
+  position: absolute;
+  z-index: 2;
+  margin-top: 165px;
+}
+
+.botton {
+  background: #4b4b4d;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.counter {
+  display: flex;
+  width: 100vh;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+}
+
+.created-tasks {
+  font: 18px Arial;
+  color: #00afef;
+  margin-top: 5vh;
+}
+
+.task-counter {
+  width: fit-content;
+  height: fit-content;
+  border-radius: 4px;
+  margin-top: 5vh;
+  margin-left: 1vh;
+  margin-right: 40%;
+  background-color: #e6e7e8;
+  padding: 2px;
+}
+
+.task-count-txt {
+  font: 18px Arial;
+}
+
+.completed-task {
+  font: 18px Arial;
+  color: #00afef;
+  margin-top: 5vh;
+}
+
+.completed-task-counter {
+  width: fit-content;
+  height: fit-content;
+  border-radius: 4px;
+  background-color: #e6e7e8;
+  margin-top: 5vh;
+  margin-left: 1vh;
+  padding: 2px;
+}
+
+.completed-task-count-txt {
+  font: 18px Arial;
+}
+
+.create {
+  color: white;
+  width: 80px;
+  height: 40px;
+  background-color: #00afef;
+  border: 0;
+  border-radius: 10px;
+  font: 18px Arial;
+}
+
+.input-text {
+  width: 520px;
+  height: 35px;
+  color: #e6e7e8;
+  background-color: #373435;
+  border-radius: 10px;
+  font: 20px Arial;
+  margin: 0 auto;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  width: 100vh;
+  height: fit-content;
+  list-style: none;
+  padding: 0;
+  font: 20px Arial;
+  border-radius: 10px;
+  align-items: center;
+}
+
+.delete-button {
+  background-color: #373435;
+}
+
+.task-item {
+  display: flex;
+  width: 710px;
+  height: fit-content;
+  background-color: #373435;
+  color: #e6e7e8;
+  margin: 5px;
+  word-break: break-word;
+  align-items: flex-start;
+}
+
+.delete-button {
+  margin-left: 10px;
+  width: 50px;
+}
+
+span {
+  width: 100vh;
+  margin: 0;
+}
+
+.checkbox {
+  margin-right: 10px;
+  width: 50px;
+}
