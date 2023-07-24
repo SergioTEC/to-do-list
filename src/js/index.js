@@ -1,59 +1,22 @@
+import {
+  addCounter,
+  subtractCounter,
+  addCompletedTaskCount,
+  subtractCompletedTaskCount,
+  updateCounter
+} from './counter.js'
+
+export { 
+  taskCountTxt,
+}
+
 const inputText = document.querySelector('.input-text')
 const create = document.querySelector('.create')
 const taskList = document.querySelector('.task-list')
 const taskCountTxt = document.querySelector('.task-count-txt')
-const completedTaskCountTxt = document.querySelector('.completed-task-count-txt')
-let completedTaskCount = 0
 
 // Task creation event
 create.addEventListener('click', task)
-
-// Function that makes the sum of the tasks counter
-function addCounter (counterTaskTxt) {
-  let taskCountNumber = parseInt(counterTaskTxt.textContent)
-  taskCountNumber++
-  counterTaskTxt.textContent = taskCountNumber
-  updateCounter()
-}
-
-// Function that subtracts the task counter
-function subtractCounter (counterTaskTxt) {
-  let taskCountNumber = parseInt(counterTaskTxt.textContent)
-  taskCountNumber--
-  counterTaskTxt.textContent = taskCountNumber
-  updateCounter()
-}
-
-// Function that makes the sum of completed tasks
-function addCompletedTaskCount () {
-  completedTaskCount++
-  updateCounter()
-}
-
-// Function that subtracts completed tasks
-function subtractCompletedTaskCount () {
-  completedTaskCount--
-  updateCounter()
-}
-
-// Function that updates the counter of completed tasks
-function updateCounter () {
-  const text = completedTaskCountTxt.textContent
-  const numbers = text.match(/\d+/g)
-
-  if (numbers.length === 2) {
-    let number1 = parseInt(numbers[0])
-    let number2 = parseInt(numbers[1])
-
-    const taskCountNumber = parseInt(taskCountTxt.textContent)
-
-    number1 = completedTaskCount
-    number2 = taskCountNumber
-
-    const newText = number1 + ' de ' + number2
-    completedTaskCountTxt.textContent = newText
-  }
-}
 
 // Function for creating a task
 function task () {
@@ -63,7 +26,7 @@ function task () {
     addCounter(taskCountTxt)
 
     // Creating the task list
-    const taskItem = document.createElement('li')
+    const taskItem = document.createElement('li');
     taskItem.className = 'task-item'
 
     // Checkbox creation
@@ -81,7 +44,7 @@ function task () {
 
     // Creating the delete task button image
     const trashIcon = document.createElement('img')
-    trashIcon.src = '../public/assets/trash_icon.png'
+    trashIcon.src = '/public/assets/trash_icon.png'
     trashIcon.alt = 'Delete'
 
     // Adds the created elements as children of the task element
