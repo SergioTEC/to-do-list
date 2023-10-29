@@ -34,6 +34,15 @@ function task () {
     checkbox.type = 'checkbox'
     checkbox.className = 'checkbox'
 
+    // Creating the edit task button
+    const editButton = document.createElement('button')
+    editButton.className = 'edit-button'
+
+    // Creating the edit task button image
+    const editIcon = document.createElement('img')
+    editIcon.src = '/public/assets/pencil_icon.png'
+    editIcon.alt = 'Edit'
+
     // Creating task text
     const taskTextElement = document.createElement('span')
     taskTextElement.textContent = taskText
@@ -49,6 +58,8 @@ function task () {
 
     // Adds the created elements as children of the task element
     taskItem.appendChild(checkbox)
+    taskItem.appendChild(editButton)
+    editButton.appendChild(editIcon)
     taskItem.appendChild(taskTextElement)
     taskItem.appendChild(deleteButton)
     deleteButton.appendChild(trashIcon)
