@@ -46,6 +46,7 @@ function task () {
     // Creating task text
     const taskTextElement = document.createElement('span')
     taskTextElement.textContent = taskText
+    taskTextElement.className = 'task-text'
 
     // Creating the task delete button
     const deleteButton = document.createElement('button')
@@ -67,6 +68,43 @@ function task () {
 
     // Stores the reference to the corresponding checkbox
     const checkboxRef = checkbox
+
+    // Creating the event to edit a task
+    editButton.addEventListener('click', editTask)
+
+    // Function to edit a task
+    function editTask(){
+      // Retrieves the text element of the task you want to edit
+      const taskTextElement = taskItem.querySelector('span')
+      const taskText = taskTextElement.textContent
+
+      // Create a text input field for editing
+      const editInput = document.createElement('input')
+      editInput.type = 'text'
+      editInput.value = taskText
+
+      // Replaces text element with text input
+      taskTextElement.replaceWith(editInput)
+
+      // Create a Save button
+      const saveButton = document.createElement('button')
+      saveButton.textContent = 'Salvar'
+
+      // Add a click event to the Save button to confirm changes
+      saveButton.addEventListener('click', saveText)
+
+      function saveText(){
+        const editedText = editInput.value
+        // Update the task text with the edited text
+        taskTextElement.textContent = editedText
+
+        // Replace input field and remove Save button
+        saveButton.remove()
+        editInput.replaceWith(taskTextElement)
+      }
+      // Add Save button to task element
+      taskItem.appendChild(saveButton)
+    }
 
     // Creating the event to delete a task
     deleteButton.addEventListener('click', deleteTask)
