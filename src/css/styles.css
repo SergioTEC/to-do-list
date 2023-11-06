@@ -145,3 +145,16 @@ span {
   margin-right: 10px;
   margin-left: -10px;
 }
+
+.input-edit-text {
+  background-color: #373435;
+  color: #e6e7e8;
+  width: 80vh;
+  margin: 0;
+  font: 20px Arial;
+  border: 5px solid #00afef;
+}
+
+.save-button {
+  background-color: #373435;
+}

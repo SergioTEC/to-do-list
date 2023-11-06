@@ -82,13 +82,19 @@ function task () {
       const editInput = document.createElement('input')
       editInput.type = 'text'
       editInput.value = taskText
+      editInput.className = 'input-edit-text'
 
       // Replaces text element with text input
       taskTextElement.replaceWith(editInput)
 
       // Create a Save button
       const saveButton = document.createElement('button')
-      saveButton.textContent = 'Salvar'
+      saveButton.className = 'save-button'
+
+      // Creating the save task button image
+      const saveIcon = document.createElement('img')
+      saveIcon.src = '/public/assets/save_icon.png'
+      saveIcon.alt = 'Save'
 
       // Add a click event to the Save button to confirm changes
       saveButton.addEventListener('click', saveText)
@@ -104,6 +110,7 @@ function task () {
       }
       // Add Save button to task element
       taskItem.appendChild(saveButton)
+      saveButton.appendChild(saveIcon)
     }
 
     // Creating the event to delete a task
