@@ -114,7 +114,7 @@ body {
 }
 
 .delete-button {
-  margin-left: 10px;
+  margin-left: 15px;
   width: 50px;
   background-color: #373435;
 }
@@ -128,6 +128,7 @@ body {
   margin: 5px;
   word-break: break-word;
   align-items: flex-start;
+  border-radius: 8px;
 }
 
 span {
@@ -149,12 +150,16 @@ span {
 .input-edit-text {
   background-color: #373435;
   color: #e6e7e8;
-  width: 80vh;
+  width: 100vh;
   margin: 0;
   font: 20px Arial;
   border: 5px solid #00afef;
 }
 
 .save-button {
+  background-color: #373435;
+}
+
+.cancel-button {
   background-color: #373435;
 }

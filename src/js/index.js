@@ -94,10 +94,30 @@ function task () {
       // Creating the save task button image
       const saveIcon = document.createElement('img')
       saveIcon.src = '/public/assets/save_icon.png'
-      saveIcon.alt = 'Save'
+      saveIcon.alt = 'Save Edit'
+
+      // Create a cancel button
+      const cancelButton = document.createElement('button')
+      cancelButton.className = 'cancel-button'
+
+      // Creating the cancel task button image
+      const cancelIcon = document.createElement('img')
+      cancelIcon.src = '/public/assets/cancel_icon.png'
+      cancelIcon.alt = 'Cancel Edit'
+
+      // Add Save button to task element
+      taskItem.appendChild(saveButton)
+      saveButton.appendChild(saveIcon)
+
+      //Add Cancel button to task element
+      taskItem.appendChild(cancelButton)
+      cancelButton.appendChild(cancelIcon)
 
       // Add a click event to the Save button to confirm changes
       saveButton.addEventListener('click', saveText)
+
+      // Add a click event to the Cancel button to cancel changes
+      cancelButton.addEventListener('click', cancelEdit)
 
       function saveText(){
         const editedText = editInput.value
@@ -106,11 +126,15 @@ function task () {
 
         // Replace input field and remove Save button
         saveButton.remove()
+        cancelButton.remove()
         editInput.replaceWith(taskTextElement)
       }
-      // Add Save button to task element
-      taskItem.appendChild(saveButton)
-      saveButton.appendChild(saveIcon)
+
+      function cancelEdit(){
+        editInput.replaceWith(taskTextElement)
+        saveButton.remove()
+        cancelButton.remove()
+      }
     }
 
     // Creating the event to delete a task
