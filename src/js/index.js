@@ -131,9 +131,12 @@ function task () {
       }
 
       function cancelEdit(){
-        editInput.replaceWith(taskTextElement)
+        var cancelEditRes = confirm('Deseja descartar a edição da tarefa?')
+        if(cancelEditRes){
+          editInput.replaceWith(taskTextElement)
         saveButton.remove()
         cancelButton.remove()
+        }
       }
     }
 
@@ -142,9 +145,11 @@ function task () {
 
     // Function to delete a task
     function deleteTask () {
-      taskList.removeChild(taskItem)
-      subtractCounter(taskCountTxt)
-
+      var deleteTaskRes = confirm('Deseja deletar a tarefa?')
+      if(deleteTaskRes){
+        taskList.removeChild(taskItem)
+        subtractCounter(taskCountTxt)
+      }
       // Checks that the task is complete before being deleted
       if (checkboxRef.checked) {
         subtractCompletedTaskCount()
