@@ -14,169 +14,222 @@ const inputText = document.querySelector('.input-text')
 const create = document.querySelector('.create')
 const taskList = document.querySelector('.task-list')
 const taskCountTxt = document.querySelector('.task-count-txt')
+const url = 'http://localhost:3000/tasks'
 
 // Task creation event
-create.addEventListener('click', task)
+create.addEventListener('click', handleTaskCreation)
 
-// Function for creating a task
-function task () {
+// Receiving data from database
+fetch(url)
+  .then(response => {
+    if(!response.ok) {
+      throw new Error('Erro ao obter tarefas do banco de dados')
+    }
+    return response.json()
+  })
+  .then(data => {
+    console.log('Tarefas obtidas com sucesso:', data)
+    data.forEach(taskData => createTaskItem(taskData))
+  })
+  .catch(error => {
+    console.error('Erro:', error.message)
+  })
+
+function handleTaskCreation() {
   const taskText = inputText.value.trim()
 
   if (taskText !== '') {
     addCounter(taskCountTxt)
 
-    // Creating the task list
-    const taskItem = document.createElement('li');
-    taskItem.className = 'task-item'
+    // Build the task object to send to the backend
+    const taskData = { text: taskText, strikethrough: false }
 
-    // Checkbox creation
-    const checkbox = document.createElement('input')
-    checkbox.type = 'checkbox'
-    checkbox.className = 'checkbox'
-
-    // Creating the edit task button
-    const editButton = document.createElement('button')
-    editButton.className = 'edit-button'
-
-    // Creating the edit task button image
-    const editIcon = document.createElement('img')
-    editIcon.src = '/public/assets/pencil_icon.png'
-    editIcon.alt = 'Edit'
-
-    // Creating task text
-    const taskTextElement = document.createElement('span')
-    taskTextElement.textContent = taskText
-    taskTextElement.className = 'task-text'
-
-    // Creating the task delete button
-    const deleteButton = document.createElement('button')
-    deleteButton.className = 'delete-button'
-
-    // Creating the delete task button image
-    const trashIcon = document.createElement('img')
-    trashIcon.src = '/public/assets/trash_icon.png'
-    trashIcon.alt = 'Delete'
-
-    // Adds the created elements as children of the task element
-    taskItem.appendChild(checkbox)
-    taskItem.appendChild(editButton)
-    editButton.appendChild(editIcon)
-    taskItem.appendChild(taskTextElement)
-    taskItem.appendChild(deleteButton)
-    deleteButton.appendChild(trashIcon)
-    taskList.appendChild(taskItem)
-
-    // Stores the reference to the corresponding checkbox
-    const checkboxRef = checkbox
-
-    // Creating the event to edit a task
-    editButton.addEventListener('click', editTask)
-
-    // Function to edit a task
-    function editTask(){
-      // Retrieves the text element of the task you want to edit
-      const taskTextElement = taskItem.querySelector('span')
-      const taskText = taskTextElement.textContent
-
-      // Create a text input field for editing
-      const editInput = document.createElement('input')
-      editInput.type = 'text'
-      editInput.value = taskText
-      editInput.className = 'input-edit-text'
-
-      // Replaces text element with text input
-      taskTextElement.replaceWith(editInput)
-
-      // Create a Save button
-      const saveButton = document.createElement('button')
-      saveButton.className = 'save-button'
-
-      // Creating the save task button image
-      const saveIcon = document.createElement('img')
-      saveIcon.src = '/public/assets/save_icon.png'
-      saveIcon.alt = 'Save Edit'
-
-      // Create a cancel button
-      const cancelButton = document.createElement('button')
-      cancelButton.className = 'cancel-button'
-
-      // Creating the cancel task button image
-      const cancelIcon = document.createElement('img')
-      cancelIcon.src = '/public/assets/cancel_icon.png'
-      cancelIcon.alt = 'Cancel Edit'
-
-      // Add Save button to task element
-      taskItem.appendChild(saveButton)
-      saveButton.appendChild(saveIcon)
-
-      //Add Cancel button to task element
-      taskItem.appendChild(cancelButton)
-      cancelButton.appendChild(cancelIcon)
-
-      // Add a click event to the Save button to confirm changes
-      saveButton.addEventListener('click', saveText)
-
-      // Add a click event to the Cancel button to cancel changes
-      cancelButton.addEventListener('click', cancelEdit)
-
-      function saveText(){
-        const editedText = editInput.value
-        // Update the task text with the edited text
-        taskTextElement.textContent = editedText
-
-        // Replace input field and remove Save button
-        saveButton.remove()
-        cancelButton.remove()
-        editInput.replaceWith(taskTextElement)
-      }
-
-      function cancelEdit(){
-        var cancelEditRes = confirm('Deseja descartar a edição da tarefa?')
-        if(cancelEditRes){
-          editInput.replaceWith(taskTextElement)
-        saveButton.remove()
-        cancelButton.remove()
+    // Send a POST request to the backend
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskData),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao adicionar nova tarefa ao banco de dados')
         }
-      }
-    }
-
-    // Creating the event to delete a task
-    deleteButton.addEventListener('click', deleteTask)
-
-    // Function to delete a task
-    function deleteTask () {
-      var deleteTaskRes = confirm('Deseja deletar a tarefa?')
-      if(deleteTaskRes){
-        taskList.removeChild(taskItem)
-        subtractCounter(taskCountTxt)
-      }
-      // Checks that the task is complete before being deleted
-      if (checkboxRef.checked) {
-        subtractCompletedTaskCount()
-      }
-    }
-
-    // Checkbox event to strikethrough text
-    checkbox.addEventListener('change', strikethroughText)
-
-    // Checkbox function to strikethrough text
-    function strikethroughText () {
-      if (this.checked) {
-        taskItem.style.textDecoration = 'line-through'
-        taskItem.style.color = '#40B87B'
-        addCompletedTaskCount()
-      } else {
-        taskItem.style.textDecoration = 'none'
-        taskItem.style.color = '#E6E7E8'
-        subtractCompletedTaskCount()
-      }
-    }
-
-    // Clear Task Creation Input
+        return response.json()
+      })
+      .then(createTaskItem)
+      .catch(error => {
+        console.error('Erro:', error.message)
+      })
     inputText.value = ''
+
   } else {
-    window.alert(
-      'Verifique se foi digitado algo em "Adicione uma nova tarefa"'
-    )
+    window.alert('Verifique se foi digitado algo em "Adicione uma nova tarefa')
+  }
+}
+
+// Function to update a task on database
+function updateTask(taskCod, taskData) {
+  fetch(`${url}/${taskCod}`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(taskData)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar a tarefa no banco de dados')
+      }
+      return response.json()
+    })
+    .then(updateTask => {
+      console.log('Tarefa atualizada com sucesso:', updateTask)
+    })
+    .catch(error =>{
+      console.error('Erro:', error.message)
+    })
+}
+
+// Function to delete a task on database
+function deleteTask(taskCod) {
+  fetch(`${url}/${taskCod}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao excluir a tarefa no banco de dados')
+      }
+      return response.json()
+    })
+    .then(deleteTask => {
+      console.log('Tarefa excluída com sucesso:', deleteTask)
+    })
+    .catch(error => {
+      console.error('Erro:', error.message)
+    })
+}
+
+function createTaskItem(taskData) {
+  // Creating the task list
+  const taskItem = document.createElement('li')
+  taskItem.className = 'task-item'
+
+  // Creating items for a task
+  const checkbox = createCheckbox()
+  const editButton = createButton('edit-button', 'Edit', 'edit_icon.png')
+  const taskTextElement = createTextElement('span', taskData.text)
+  const deleteButton = createButton('delete-button', 'Delete', 'trash_icon.png')
+
+  taskItem.appendChild(checkbox)
+  taskItem.appendChild(editButton)
+  taskItem.appendChild(taskTextElement)
+  taskItem.appendChild(deleteButton)
+
+  // Stores the reference to the corresponding checkbox
+  const checkboxRef = checkbox
+
+  // Creating events for task items
+  editButton.addEventListener('click', () => handleEditTask(taskItem, taskTextElement, checkboxRef, taskData.cod))
+  deleteButton.addEventListener('click', () => handleDeleteTask(taskItem, checkboxRef, taskData.cod))
+  checkbox.addEventListener('change', () => handleCheckboxChange(checkbox, taskItem))
+
+  taskList.appendChild(taskItem)
+
+  updateCounter(taskCountTxt, 1)
+}
+
+function createCheckbox() {
+  const checkbox = document.createElement('input')
+  checkbox.type = 'checkbox'
+  checkbox.className = 'checkbox'
+  return checkbox
+}
+
+function createButton(className, altText, iconSrc) {
+  const button = document.createElement('button')
+  button.className = className
+  const icon = document.createElement('img')
+  icon.src = `/public/assets/${iconSrc}`
+  icon.alt = altText
+  button.appendChild(icon)
+  return button
+}
+
+function createTextElement(elementType, textContent) {
+  const element = document.createElement(elementType)
+  element.textContent = textContent
+  return element
+}
+
+function handleEditTask(taskItem, taskTextElement, checkboxRef, taskCod) {
+  const taskText = taskTextElement.textContent
+  const editInput = createInput('text', taskText)
+  const saveButton = createButton('save-button', 'Save Edit', 'save_icon.png')
+  const cancelButton = createButton('cancel-button', 'Cancel Edit', 'cancel_icon.png')
+
+  taskTextElement.replaceWith(editInput)
+  taskItem.appendChild(saveButton)
+  taskItem.appendChild(cancelButton)
+
+  saveButton.addEventListener('click', () => handleSaveText(editInput, taskTextElement, taskItem, saveButton, cancelButton, taskCod))
+  cancelButton.addEventListener('click', () => handleCancelEdit(editInput, taskTextElement, taskItem, saveButton, cancelButton)) 
+}
+
+function createInput(type, value) {
+  const input = document.createElement('input')
+  input.type = type
+  input.value = value
+  input.className = 'input-edit-text'
+  return input
+}
+
+function handleSaveText(editInput, taskTextElement, taskItem, saveButton, cancelButton, taskCod) {
+  const editedText = editInput.value
+  taskTextElement.textContent = editedText
+  saveButton.remove()
+  cancelButton.remove()
+  editInput.replaceWith(taskTextElement)
+
+  updateTask(taskCod, {text: editedText, strikethrough: false})
+}
+
+function handleCancelEdit(editInput, taskTextElement, taskItem, saveButton, cancelButton) {
+  const cancelEditRes = confirm('Deseja descartar a edição da tarefa?')
+  if (cancelEditRes) {
+    editInput.replaceWith(taskTextElement)
+    saveButton.remove()
+    cancelButton.remove()
+  }
+}
+
+function handleDeleteTask(taskItem, checkboxRef, taskCod) {
+  const deleteTaskRes = confirm('Deseja deletar a tarefa?')
+  if (deleteTaskRes) {
+    taskList.removeChild(taskItem)
+    updateCounter(taskCountTxt, -1)
+    deleteTask(taskCod)
+  }
+  if (checkboxRef.checked) {
+    subtractCompletedTaskCount()
+  }
+}
+
+function handleCheckboxChange(checkbox, taskItem) {
+  if (checkbox.checked) {
+    taskItem.style.textDecoration = 'line-through'
+    taskItem.style.color = '#40B87B'
+    addCompletedTaskCount()
+  } else {
+    taskItem.style.textDecoration = 'none'
+    taskItem.style.color = '#E6E7E8'
+    subtractCompletedTaskCount()
   }
 }
