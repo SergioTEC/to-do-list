@@ -19,21 +19,26 @@ const url = 'http://localhost:3000/tasks'
 // Task creation event
 create.addEventListener('click', handleTaskCreation)
 
-// Receiving data from database
-fetch(url)
-  .then(response => {
-    if(!response.ok) {
-      throw new Error('Erro ao obter tarefas do banco de dados')
-    }
-    return response.json()
+function fetchDataFromDataBase() {
+  return new Promise((resolve, reject) => {
+    fetch(url)
+      .then(response => {
+        if(!response.ok) {
+          throw new Error('Erro ao obter tarefas do banco de dados')
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log('Tarefas obtidas com sucesso:', data)
+        data.forEach(taskData => createTaskItem(taskData))
+      })
+      .catch(error => {
+        console.error('Erro:', error.message)
+      })
   })
-  .then(data => {
-    console.log('Tarefas obtidas com sucesso:', data)
-    data.forEach(taskData => createTaskItem(taskData))
-  })
-  .catch(error => {
-    console.error('Erro:', error.message)
-  })
+}
+
+fetchDataFromDataBase()
 
 function handleTaskCreation() {
   const taskText = inputText.value.trim()
@@ -59,9 +64,14 @@ function handleTaskCreation() {
         }
         return response.json()
       })
-      .then(createTaskItem)
+      .then(taskData => {
+        createTaskItem(taskData)
+        taskList.innerHTML = '';
+        fetchDataFromDataBase()
+      })
       .catch(error => {
         console.error('Erro:', error.message)
+        subtractCounter(taskCountTxt)
       })
     inputText.value = ''
 
