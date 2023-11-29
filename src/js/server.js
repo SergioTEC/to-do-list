@@ -20,7 +20,7 @@ app.get('/tasks', (req, res) => {
     })
 })
 
-//Route to add a new task
+// Route to add a new task
 app.post('/tasks', (req, res) => {
     const taskText = req.body.text
     connection.query('INSERT INTO tasks (Text) VALUES (?)', [taskText], (error, result) => {
@@ -35,7 +35,7 @@ app.post('/tasks', (req, res) => {
 
 // Route to Update Task
 app.put('/tasks/:cod', (req, res) => {
-    const taskCod = req.params.taskCod
+    const taskCod = req.params.cod
     const updateText = req.body.text
 
     if (!updateText) {
@@ -56,12 +56,12 @@ app.put('/tasks/:cod', (req, res) => {
 
 // Route to Delete Task
 app.delete('/tasks/:cod', (req, res) => {
-    const taskId = req.params.taskId
+    const taskCod = req.params.cod
 
-    // Logic to delete task with taskId in database using connection
+    // Logic to delete task with taskCod in database using connection
     const deleteQuery = 'DELETE FROM tasks WHERE cod = ?'
 
-    connection.query(deleteQuery, [taskId], (error, results) => {
+    connection.query(deleteQuery, [taskCod], (error, results) => {
         if (error) {
             console.error(error)
             return res.status(500).json({ message: 'Erro ao excluir a tarefa.' })
