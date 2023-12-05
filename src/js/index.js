@@ -3,12 +3,10 @@ import {
   subtractCounter,
   addCompletedTaskCount,
   subtractCompletedTaskCount,
-  updateCounter
+  updateCounter,
 } from './counter.js'
 
-export { 
-  taskCountTxt,
-}
+export { taskCountTxt }
 
 const inputText = document.querySelector('.input-text')
 const create = document.querySelector('.create')
@@ -22,17 +20,17 @@ create.addEventListener('click', handleTaskCreation)
 function fetchDataFromDataBase() {
   return new Promise((resolve, reject) => {
     fetch(url)
-      .then(response => {
-        if(!response.ok) {
+      .then((response) => {
+        if (!response.ok) {
           throw new Error('Erro ao obter tarefas do banco de dados')
         }
         return response.json()
       })
-      .then(data => {
+      .then((data) => {
         console.log('Tarefas obtidas com sucesso:', data)
-        data.forEach(taskData => createTaskItem(taskData))
+        data.forEach((taskData) => createTaskItem(taskData))
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Erro:', error.message)
       })
   })
@@ -53,28 +51,27 @@ function handleTaskCreation() {
     fetch(url, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(taskData),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Erro ao adicionar nova tarefa ao banco de dados')
         }
         return response.json()
       })
-      .then(taskData => {
+      .then((taskData) => {
         createTaskItem(taskData)
-        taskList.innerHTML = '';
+        taskList.innerHTML = ''
         fetchDataFromDataBase()
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Erro:', error.message)
         subtractCounter(taskCountTxt)
       })
     inputText.value = ''
-
   } else {
     window.alert('Verifique se foi digitado algo em "Adicione uma nova tarefa')
   }
@@ -85,21 +82,21 @@ function updateTask(taskCod, taskData) {
   fetch(`${url}/${taskCod}`, {
     method: 'PUT',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(taskData)
+    body: JSON.stringify(taskData),
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw new Error('Erro ao atualizar a tarefa no banco de dados')
       }
       return response.json()
     })
-    .then(updateTask => {
+    .then((updateTask) => {
       console.log('Tarefa atualizada com sucesso:', updateTask)
     })
-    .catch(error =>{
+    .catch((error) => {
       console.error('Erro:', error.message)
     })
 }
@@ -109,20 +106,20 @@ function deleteTask(taskCod) {
   fetch(`${url}/${taskCod}`, {
     method: 'DELETE',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw new Error('Erro ao excluir a tarefa no banco de dados')
       }
       return response.json()
     })
-    .then(deleteTask => {
+    .then((deleteTask) => {
       console.log('Tarefa excluída com sucesso:', deleteTask)
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Erro:', error.message)
     })
 }
@@ -147,9 +144,15 @@ function createTaskItem(taskData) {
   const checkboxRef = checkbox
 
   // Creating events for task items
-  editButton.addEventListener('click', () => handleEditTask(taskItem, taskTextElement, checkboxRef, taskData.cod))
-  deleteButton.addEventListener('click', () => handleDeleteTask(taskItem, checkboxRef, taskData.cod))
-  checkbox.addEventListener('change', () => handleCheckboxChange(checkbox, taskItem))
+  editButton.addEventListener('click', () =>
+    handleEditTask(taskItem, taskTextElement, checkboxRef, taskData.cod),
+  )
+  deleteButton.addEventListener('click', () =>
+    handleDeleteTask(taskItem, checkboxRef, taskData.cod),
+  )
+  checkbox.addEventListener('change', () =>
+    handleCheckboxChange(checkbox, taskItem),
+  )
 
   taskList.appendChild(taskItem)
 
@@ -183,14 +186,35 @@ function handleEditTask(taskItem, taskTextElement, checkboxRef, taskCod) {
   const taskText = taskTextElement.textContent
   const editInput = createInput('text', taskText)
   const saveButton = createButton('save-button', 'Save Edit', 'save_icon.png')
-  const cancelButton = createButton('cancel-button', 'Cancel Edit', 'cancel_icon.png')
+  const cancelButton = createButton(
+    'cancel-button',
+    'Cancel Edit',
+    'cancel_icon.png',
+  )
 
   taskTextElement.replaceWith(editInput)
   taskItem.appendChild(saveButton)
   taskItem.appendChild(cancelButton)
 
-  saveButton.addEventListener('click', () => handleSaveText(editInput, taskTextElement, taskItem, saveButton, cancelButton, taskCod))
-  cancelButton.addEventListener('click', () => handleCancelEdit(editInput, taskTextElement, taskItem, saveButton, cancelButton)) 
+  saveButton.addEventListener('click', () =>
+    handleSaveText(
+      editInput,
+      taskTextElement,
+      taskItem,
+      saveButton,
+      cancelButton,
+      taskCod,
+    ),
+  )
+  cancelButton.addEventListener('click', () =>
+    handleCancelEdit(
+      editInput,
+      taskTextElement,
+      taskItem,
+      saveButton,
+      cancelButton,
+    ),
+  )
 }
 
 function createInput(type, value) {
@@ -201,17 +225,30 @@ function createInput(type, value) {
   return input
 }
 
-function handleSaveText(editInput, taskTextElement, taskItem, saveButton, cancelButton, taskCod) {
+function handleSaveText(
+  editInput,
+  taskTextElement,
+  taskItem,
+  saveButton,
+  cancelButton,
+  taskCod,
+) {
   const editedText = editInput.value
   taskTextElement.textContent = editedText
   saveButton.remove()
   cancelButton.remove()
   editInput.replaceWith(taskTextElement)
 
-  updateTask(taskCod, {text: editedText, strikethrough: false})
+  updateTask(taskCod, { text: editedText, strikethrough: false })
 }
 
-function handleCancelEdit(editInput, taskTextElement, taskItem, saveButton, cancelButton) {
+function handleCancelEdit(
+  editInput,
+  taskTextElement,
+  taskItem,
+  saveButton,
+  cancelButton,
+) {
   const cancelEditRes = confirm('Deseja descartar a edição da tarefa?')
   if (cancelEditRes) {
     editInput.replaceWith(taskTextElement)
