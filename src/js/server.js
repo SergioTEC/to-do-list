@@ -42,8 +42,8 @@ app.post('/tasks', (req, res) => {
 })
 
 // Route to Update Task
-app.put('/tasks/:cod', (req, res) => {
-  const taskCod = req.params.cod
+app.put('/tasks/:id', (req, res) => {
+  const taskId = req.params.id
   const updateText = req.body.text
 
   if (!updateText) {
@@ -52,10 +52,10 @@ app.put('/tasks/:cod', (req, res) => {
       .json({ error: 'O texto da tarefa é obrigatório para a atualização.' })
   }
 
-  // Logic to update task with taskCod in database using connection
-  const updateQuery = 'UPDATE tasks SET text = ? WHERE cod = ?'
+  // Logic to update task with taskId in database using connection
+  const updateQuery = 'UPDATE tasks SET text = ? WHERE id = ?'
 
-  connection.query(updateQuery, [updateText, taskCod], (error, results) => {
+  connection.query(updateQuery, [updateText, taskId], (error, results) => {
     if (error) {
       console.error(error)
       return res.status(500).json({ message: 'Erro ao atualizar a tarefa.' })
@@ -65,13 +65,13 @@ app.put('/tasks/:cod', (req, res) => {
 })
 
 // Route to Delete Task
-app.delete('/tasks/:cod', (req, res) => {
-  const taskCod = req.params.cod
+app.delete('/tasks/:id', (req, res) => {
+  const taskId = req.params.id
 
-  // Logic to delete task with taskCod in database using connection
-  const deleteQuery = 'DELETE FROM tasks WHERE cod = ?'
+  // Logic to delete task with taskId in database using connection
+  const deleteQuery = 'DELETE FROM tasks WHERE id = ?'
 
-  connection.query(deleteQuery, [taskCod], (error, results) => {
+  connection.query(deleteQuery, [taskId], (error, results) => {
     if (error) {
       console.error(error)
       return res.status(500).json({ message: 'Erro ao excluir a tarefa.' })
