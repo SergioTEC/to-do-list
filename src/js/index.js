@@ -3,7 +3,6 @@ import {
   subtractCounter,
   addCompletedTaskCount,
   subtractCompletedTaskCount,
-  updateCounter,
 } from './counter.js'
 
 export { taskCountTxt }
@@ -28,7 +27,9 @@ function fetchDataFromDataBase() {
       })
       .then((data) => {
         console.log('Tarefas obtidas com sucesso:', data)
-        data.forEach((taskData) => createTaskItem(taskData))
+        data.forEach((taskData) => {
+          createTaskItem(taskData)
+        })
       })
       .catch((error) => {
         console.error('Erro:', error.message)
@@ -42,8 +43,6 @@ function handleTaskCreation() {
   const taskText = inputText.value.trim()
 
   if (taskText !== '') {
-    addCounter(taskCountTxt)
-
     // Build the task object to send to the backend
     const taskData = { text: taskText, strikethrough: false }
 
@@ -64,8 +63,6 @@ function handleTaskCreation() {
       })
       .then((taskData) => {
         createTaskItem(taskData)
-        taskList.innerHTML = ''
-        fetchDataFromDataBase()
       })
       .catch((error) => {
         console.error('Erro:', error.message)
@@ -155,8 +152,7 @@ function createTaskItem(taskData) {
   )
 
   taskList.appendChild(taskItem)
-
-  updateCounter(taskCountTxt, 1)
+  addCounter(taskCountTxt)
 }
 
 function createCheckbox() {
@@ -261,7 +257,7 @@ function handleDeleteTask(taskItem, checkboxRef, taskCod) {
   const deleteTaskRes = confirm('Deseja deletar a tarefa?')
   if (deleteTaskRes) {
     taskList.removeChild(taskItem)
-    updateCounter(taskCountTxt, -1)
+    subtractCounter(taskCountTxt)
     deleteTask(taskCod)
   }
   if (checkboxRef.checked) {
