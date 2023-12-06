@@ -75,8 +75,8 @@ function handleTaskCreation() {
 }
 
 // Function to update a task on database
-function updateTask(taskCod, taskData) {
-  fetch(`${url}/${taskCod}`, {
+function updateTask(taskId, taskData) {
+  fetch(`${url}/${taskId}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -99,8 +99,8 @@ function updateTask(taskCod, taskData) {
 }
 
 // Function to delete a task on database
-function deleteTask(taskCod) {
-  fetch(`${url}/${taskCod}`, {
+function deleteTask(taskId) {
+  fetch(`${url}/${taskId}`, {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
@@ -142,10 +142,10 @@ function createTaskItem(taskData) {
 
   // Creating events for task items
   editButton.addEventListener('click', () =>
-    handleEditTask(taskItem, taskTextElement, checkboxRef, taskData.cod),
+    handleEditTask(taskItem, taskTextElement, checkboxRef, taskData.id),
   )
   deleteButton.addEventListener('click', () =>
-    handleDeleteTask(taskItem, checkboxRef, taskData.cod),
+    handleDeleteTask(taskItem, checkboxRef, taskData.id),
   )
   checkbox.addEventListener('change', () =>
     handleCheckboxChange(checkbox, taskItem),
@@ -178,7 +178,7 @@ function createTextElement(elementType, textContent) {
   return element
 }
 
-function handleEditTask(taskItem, taskTextElement, checkboxRef, taskCod) {
+function handleEditTask(taskItem, taskTextElement, checkboxRef, taskId) {
   const taskText = taskTextElement.textContent
   const editInput = createInput('text', taskText)
   const saveButton = createButton('save-button', 'Save Edit', 'save_icon.png')
@@ -199,7 +199,7 @@ function handleEditTask(taskItem, taskTextElement, checkboxRef, taskCod) {
       taskItem,
       saveButton,
       cancelButton,
-      taskCod,
+      taskId,
     ),
   )
   cancelButton.addEventListener('click', () =>
@@ -227,7 +227,7 @@ function handleSaveText(
   taskItem,
   saveButton,
   cancelButton,
-  taskCod,
+  taskId,
 ) {
   const editedText = editInput.value
   taskTextElement.textContent = editedText
@@ -235,7 +235,7 @@ function handleSaveText(
   cancelButton.remove()
   editInput.replaceWith(taskTextElement)
 
-  updateTask(taskCod, { text: editedText, strikethrough: false })
+  updateTask(taskId, { text: editedText, strikethrough: false })
 }
 
 function handleCancelEdit(
@@ -253,12 +253,12 @@ function handleCancelEdit(
   }
 }
 
-function handleDeleteTask(taskItem, checkboxRef, taskCod) {
+function handleDeleteTask(taskItem, checkboxRef, taskId) {
   const deleteTaskRes = confirm('Deseja deletar a tarefa?')
   if (deleteTaskRes) {
     taskList.removeChild(taskItem)
     subtractCounter(taskCountTxt)
-    deleteTask(taskCod)
+    deleteTask(taskId)
   }
   if (checkboxRef.checked) {
     subtractCompletedTaskCount()
