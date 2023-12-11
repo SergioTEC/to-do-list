@@ -10,12 +10,6 @@ Project for creating a to-do list
 
 ---
 
-<img alt="Attention icon" src="https://github.com/SergioTEC/to-do-list/assets/48964231/b9507ca8-093e-4150-8063-171d7f58bbdf" width="10%">
-
-## As I gain more knowledge relevant to the project, I will add new elements to the project
-
----
-
 ## Current layout
 
 <img alt="Current layout" src="https://github.com/SergioTEC/to-do-list/assets/48964231/73b20df6-ed19-4c5e-bcf7-ef5b5c7ed56b" width="100%">
