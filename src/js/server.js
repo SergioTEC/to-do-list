@@ -35,7 +35,11 @@ app.post('/tasks', (req, res) => {
           .status(500)
           .json({ message: 'Erro ao adicionar nova tarefa ao banco de dados' })
       } else {
-        res.status(201).json({ message: 'Tarefa adicionada com sucesso' })
+        res.status(201).json({
+          id: result.insertId,
+          text: taskText,
+          message: 'Tarefa adicionada com sucesso',
+        })
       }
     },
   )
@@ -45,6 +49,7 @@ app.post('/tasks', (req, res) => {
 app.put('/tasks/:id', (req, res) => {
   const taskId = req.params.id
   const updateText = req.body.text
+  const updateStrikethrough = req.body.strikethrough ? 1 : 0
 
   if (!updateText) {
     return res
@@ -53,15 +58,20 @@ app.put('/tasks/:id', (req, res) => {
   }
 
   // Logic to update task with taskId in database using connection
-  const updateQuery = 'UPDATE tasks SET text = ? WHERE id = ?'
+  const updateQuery =
+    'UPDATE tasks SET text = ?, strikethrough = ? WHERE id = ?'
 
-  connection.query(updateQuery, [updateText, taskId], (error, results) => {
-    if (error) {
-      console.error(error)
-      return res.status(500).json({ message: 'Erro ao atualizar a tarefa.' })
-    }
-    res.json({ message: 'Tarefa atualizada com sucesso!' })
-  })
+  connection.query(
+    updateQuery,
+    [updateText, updateStrikethrough, taskId],
+    (error, results) => {
+      if (error) {
+        console.error(error)
+        return res.status(500).json({ message: 'Erro ao atualizar a tarefa.' })
+      }
+      res.json({ message: 'Tarefa atualizada com sucesso!' })
+    },
+  )
 })
 
 // Route to Delete Task

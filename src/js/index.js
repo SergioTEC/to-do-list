@@ -3,6 +3,7 @@ import {
   subtractCounter,
   addCompletedTaskCount,
   subtractCompletedTaskCount,
+  updateCounter,
 } from './counter.js'
 
 export { taskCountTxt }
@@ -148,8 +149,15 @@ function createTaskItem(taskData) {
     handleDeleteTask(taskItem, checkboxRef, taskData.id),
   )
   checkbox.addEventListener('change', () =>
-    handleCheckboxChange(checkbox, taskItem),
+    handleCheckboxChange(checkbox, taskItem, taskData.id),
   )
+
+  if (taskData.strikethrough === 1) {
+    taskTextElement.style.textDecoration = 'line-through'
+    taskTextElement.style.color = '#40B87B'
+    checkbox.checked = true
+    addCompletedTaskCount()
+  }
 
   taskList.appendChild(taskItem)
   addCounter(taskCountTxt)
@@ -265,14 +273,27 @@ function handleDeleteTask(taskItem, checkboxRef, taskId) {
   }
 }
 
-function handleCheckboxChange(checkbox, taskItem) {
-  if (checkbox.checked) {
-    taskItem.style.textDecoration = 'line-through'
-    taskItem.style.color = '#40B87B'
-    addCompletedTaskCount()
+function handleCheckboxChange(checkbox, taskItem, taskId) {
+  if (taskId) {
+    // Gets the task text corresponding to the span element
+    const taskTextElement = taskItem.querySelector('span')
+    const editedText = taskTextElement.textContent
+
+    if (checkbox.checked) {
+      taskItem.style.textDecoration = 'line-through'
+      taskItem.style.color = '#40B87B'
+      addCompletedTaskCount()
+
+      //updateTask(taskId, { text: editedText, strikethrough: true })
+    } else {
+      taskItem.style.textDecoration = 'none'
+      taskItem.style.color = '#E6E7E8'
+      subtractCompletedTaskCount()
+
+      //updateTask(taskId, { text: editedText, strikethrough: false })
+    }
+    updateTask(taskId, { text: editedText, strikethrough: checkbox.checked })
   } else {
-    taskItem.style.textDecoration = 'none'
-    taskItem.style.color = '#E6E7E8'
-    subtractCompletedTaskCount()
+    console.error('ID da tarefa não está definida')
   }
 }
