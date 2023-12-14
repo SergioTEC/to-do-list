@@ -204,7 +204,7 @@ function handleEditTask(taskItem, taskTextElement, checkboxRef, taskId) {
     handleSaveText(
       editInput,
       taskTextElement,
-      taskItem,
+      checkboxRef,
       saveButton,
       cancelButton,
       taskId,
@@ -232,18 +232,19 @@ function createInput(type, value) {
 function handleSaveText(
   editInput,
   taskTextElement,
-  taskItem,
+  checkboxRef,
   saveButton,
   cancelButton,
   taskId,
 ) {
   const editedText = editInput.value
+  const isCheckboxChecked = checkboxRef.checked
   taskTextElement.textContent = editedText
   saveButton.remove()
   cancelButton.remove()
   editInput.replaceWith(taskTextElement)
 
-  updateTask(taskId, { text: editedText, strikethrough: false })
+  updateTask(taskId, { text: editedText, strikethrough: isCheckboxChecked })
 }
 
 function handleCancelEdit(
@@ -283,14 +284,10 @@ function handleCheckboxChange(checkbox, taskItem, taskId) {
       taskItem.style.textDecoration = 'line-through'
       taskItem.style.color = '#40B87B'
       addCompletedTaskCount()
-
-      //updateTask(taskId, { text: editedText, strikethrough: true })
     } else {
       taskItem.style.textDecoration = 'none'
       taskItem.style.color = '#E6E7E8'
       subtractCompletedTaskCount()
-
-      //updateTask(taskId, { text: editedText, strikethrough: false })
     }
     updateTask(taskId, { text: editedText, strikethrough: checkbox.checked })
   } else {
