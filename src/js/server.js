@@ -68,8 +68,9 @@ app.put('/tasks/:id', (req, res) => {
       if (error) {
         console.error(error)
         return res.status(500).json({ message: 'Erro ao atualizar a tarefa.' })
+      } else {
+        res.json({ message: 'Tarefa atualizada com sucesso!' })
       }
-      res.json({ message: 'Tarefa atualizada com sucesso!' })
     },
   )
 })
