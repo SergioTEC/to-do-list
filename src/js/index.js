@@ -281,14 +281,15 @@ function handleCheckboxChange(checkbox, taskItem, taskId) {
     const editedText = taskTextElement.textContent
 
     if (checkbox.checked) {
-      taskItem.style.textDecoration = 'line-through'
-      taskItem.style.color = '#40B87B'
+      taskTextElement.style.textDecoration = 'line-through'
+      taskTextElement.style.color = '#40B87B'
       addCompletedTaskCount()
     } else {
-      taskItem.style.textDecoration = 'none'
-      taskItem.style.color = '#E6E7E8'
+      taskTextElement.style.textDecoration = 'none'
+      taskTextElement.style.color = '#E6E7E8'
       subtractCompletedTaskCount()
     }
+
     updateTask(taskId, { text: editedText, strikethrough: checkbox.checked })
   } else {
     console.error('ID da tarefa não está definida')
